@@ -12,6 +12,10 @@ from flask_login import current_user, login_user, logout_user, login_required
 from FlaskWebProject.models import User, Post
 import msal
 import uuid
+import os
+from dotenv import load_dotenv
+
+load_dotenv("../../.env")
 
 imageSourceUrl = 'https://'+ app.config['BLOB_ACCOUNT']  + '.blob.core.windows.net/' + app.config['BLOB_CONTAINER']  + '/'
 
@@ -86,7 +90,11 @@ def authorized():
     if request.args.get('code'):
         cache = _load_cache()
         # TODO: Acquire a token from a built msal app, along with the appropriate redirect URI
-        result = None
+        result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(
+        request.args['code'],
+        scopes=Config.SCOPE,
+        redirect_uri=url_for('authorized', _external=True, _scheme='https')
+        )
         if "error" in result:
             return render_template("auth_error.html", result=result)
         session["user"] = result.get("id_token_claims")
@@ -112,17 +120,30 @@ def logout():
 
 def _load_cache():
     # TODO: Load the cache from `msal`, if it exists
-    cache = None
+    cache = msal.SerializableTokenCache()  # Create a new cache instance
+    if os.path.exists('token_cache.json'):  # Check if the cache file exists
+        cache.deserialize(open('token_cache.json', 'r').read())  # Load the cache from the file
     return cache
 
 def _save_cache(cache):
     # TODO: Save the cache, if it has changed
-    pass
+    if cache.has_state_changed:  # Check if the cache has changed
+        with open('token_cache.json', 'w') as f:  # Open the file to write
+            f.write(cache.serialize())  # Save the cache to the file
 
 def _build_msal_app(cache=None, authority=None):
     # TODO: Return a ConfidentialClientApplication
-    return None
+    return msal.ConfidentialClientApplication(
+    Config.CLIENT_ID, 
+    authority=authority or Config.AUTHORITY,
+    client_credential=Config.CLIENT_SECRET, 
+    token_cache=cache
+    )
 
 def _build_auth_url(authority=None, scopes=None, state=None):
     # TODO: Return the full Auth Request URL with appropriate Redirect URI
-    return None
+    return _build_msal_app(authority).get_authorization_request_url(
+        scopes or [],
+        state=state or str(uuid.uuid4()),
+        redirect_uri=url_for('authorized', _external=True, _scheme='https')
+    )
