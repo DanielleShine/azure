@@ -27,7 +27,6 @@ streamHandler = logging.StreamHandler()
 streamHandler.setLevel(logging.WARNING)
 app.logger.addHandler(streamHandler)
 
-app.logger.info(f'SECRET KEY: {os.environ.get('SECRET_KEY')}')
 app.logger.info(f'BLOB ACCOUNT: {os.environ.get('BLOB_ACCOUNT')}')
 app.logger.info(f'BLOB STORAGE KEY: {os.environ.get('BLOB_STORAGE_KEY')}')  
 app.logger.info(f'BLOB CONTAINER: {os.environ.get('BLOB_CONTAINER')}')
