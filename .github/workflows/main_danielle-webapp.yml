@@ -24,32 +24,11 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y unixodbc-dev
-          sudo apt-get install -y gcc g++ make
-
       - name: Create and start virtual environment
         run: |
           python -m venv venv
           source venv/bin/activate
       
-      - name: Setup environment variables
-        env:
-          SQL_USER_NAME: ${{ secrets.SQL_USER_NAME }}
-          SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
-          SQL_SERVER: ${{ secrets.SQL_SERVER }}
-          SQL_DATABASE: ${{ secrets.SQL_DATABASE}}
-          BLOB_ACCOUNT: ${{ secrets.BLOB_ACCOUNT }}
-          BLOB_CONTAINER: ${{ secrets.BLOB_CONTAINER }}
-          BLOB_STORAGE_KEY: ${{ secrets.BLOB_STORAGE_KEY }}
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          CLIENT_ID: ${{ secrets.CLIENT_ID }}
-        run: |
-          echo $SQL_USER_NAME
-          echo "Environment variables set"
-
       - name: Install dependencies
         run: pip install -r requirements.txt
         
@@ -89,23 +68,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_CFAD6B847BFB4E96AA0021EEACE9DBBF }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_AD5C6E8B9CA6461ABB702C72F7C09F99 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_7B26F7EC58BE45758A7D70BA1834B32A }}
-
-      - name: Setup environment variables
-        env:
-          SQL_USER_NAME: ${{ secrets.SQL_USER_NAME }}
-          SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
-          SQL_SERVER: ${{ secrets.SQL_SERVER }}
-          SQL_DATABASE: ${{ secrets.SQL_DATABASE}}
-          BLOB_ACCOUNT: ${{ secrets.BLOB_ACCOUNT }}
-          BLOB_CONTAINER: ${{ secrets.BLOB_CONTAINER }}
-          BLOB_STORAGE_KEY: ${{ secrets.BLOB_STORAGE_KEY }}
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          CLIENT_ID: ${{ secrets.CLIENT_ID }}
-        run: |
-          echo "Environment variables set"
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_02050D74DAFE45B58CAB03F141D2B948 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_406208D8F86840A6827F2C6AE182212A }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_E691E3F918EB4C1E8DA7AEF9230F261F }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
