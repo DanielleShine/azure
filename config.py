@@ -1,5 +1,4 @@
 import os
-import dotenv
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 

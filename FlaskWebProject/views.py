@@ -13,9 +13,9 @@ from FlaskWebProject.models import User, Post
 import msal
 import uuid
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv("../../.env")
+# load_dotenv("../../.env")
 
 imageSourceUrl = 'https://'+ app.config['BLOB_ACCOUNT']  + '.blob.core.windows.net/' + app.config['BLOB_CONTAINER']  + '/'
 

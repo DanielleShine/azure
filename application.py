@@ -1,7 +1,6 @@
 """
 This script runs the FlaskWebProject application using a development server.
 """
-from dotenv import load_dotenv
 from os import environ
 from FlaskWebProject import app
 
