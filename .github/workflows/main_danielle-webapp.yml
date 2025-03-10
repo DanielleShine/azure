@@ -47,6 +47,7 @@ jobs:
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
         run: |
+          echo $SQL_USER_NAME
           echo "Environment variables set"
 
       - name: Install dependencies
