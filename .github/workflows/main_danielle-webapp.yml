@@ -35,6 +35,20 @@ jobs:
           python -m venv venv
           source venv/bin/activate
       
+      - name: Setup environment variables
+        env:
+          SQL_USER_NAME: ${{ secrets.SQL_USER_NAME }}
+          SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
+          SQL_SERVER: ${{ secrets.SQL_SERVER }}
+          SQL_DATABASE: ${{ secrets.SQL_DATABASE}}
+          BLOB_ACCOUNT: ${{ secrets.BLOB_ACCOUNT }}
+          BLOB_CONTAINER: ${{ secrets.BLOB_CONTAINER }}
+          BLOB_STORAGE_KEY: ${{ secrets.BLOB_STORAGE_KEY }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        run: |
+          echo "Environment variables set"
+
       - name: Install dependencies
         run: pip install -r requirements.txt
         
