@@ -16,6 +16,7 @@ import os
 # from dotenv import load_dotenv
 
 # load_dotenv("../../.env")
+# adding comment para lang maka push og utro
 
 imageSourceUrl = 'https://'+ app.config['BLOB_ACCOUNT']  + '.blob.core.windows.net/' + app.config['BLOB_CONTAINER']  + '/'
 
