@@ -121,15 +121,14 @@ def logout():
 def _load_cache():
     # TODO: Load the cache from `msal`, if it exists
     cache = msal.SerializableTokenCache()  # Create a new cache instance
-    if os.path.exists('token_cache.json'):  # Check if the cache file exists
-        cache.deserialize(open('token_cache.json', 'r').read())  # Load the cache from the file
+    if session.get("token_cache"):
+        cache.deserialize(session["token_cache"])
     return cache
 
 def _save_cache(cache):
     # TODO: Save the cache, if it has changed
     if cache.has_state_changed:  # Check if the cache has changed
-        with open('token_cache.json', 'w') as f:  # Open the file to write
-            f.write(cache.serialize())  # Save the cache to the file
+        session["token_cache"] = cache.serialize()
 
 def _build_msal_app(cache=None, authority=None):
     # TODO: Return a ConfidentialClientApplication
