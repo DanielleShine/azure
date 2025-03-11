@@ -24,17 +24,10 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y unixodbc-dev
-          sudo apt-get install -y gcc g++ make
-
       - name: Create and start virtual environment
         run: |
           python -m venv venv
           source venv/bin/activate
-          
       
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -75,9 +68,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_02050D74DAFE45B58CAB03F141D2B948 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_406208D8F86840A6827F2C6AE182212A }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_E691E3F918EB4C1E8DA7AEF9230F261F }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_88587F1DDC6148D8A9E24F7D899FA5DF }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_20A8E2A778FA46B9B2B018D90BEF0869 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_CA370255EDAF474AA0D76C81E0B4EC08 }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
